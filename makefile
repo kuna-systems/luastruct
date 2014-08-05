@@ -19,9 +19,9 @@ CWARNS = -Wall -W \
 CFLAGS = -D_POSIX_SOURCE $(MYCFLAGS) $(CWARNS) $(INTTYPE) -O2 -I$(LUADIR)
 CC ?= gcc
 
-libluastruct.so: struct.c makefile
-	$(CC) $(CFLAGS) -shared -fpic -o libluastruct.so struct.c
+struct.so: struct.c makefile
+	$(CC) $(CFLAGS) -shared -fpic -o struct.so struct.c
 
 clean:
-	rm -f libluastruct.so
+	rm -f struct.so
 
