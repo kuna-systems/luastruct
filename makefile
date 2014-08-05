@@ -1,13 +1,13 @@
 # point it to where the compiler can find the Lua header files (lua.h, etc.)
 # LUADIR = ../lua
-LUADIR = /usr/include/lua5.1/
+LUADIR ?= /usr/include/lua5.1/
 
 # define your own "large" integer type; not defining a proper type
 # will default to 'long', which may cause problems with 'size_t'
 INTTYPE = -DSTRUCT_INT="long long"
 
 
-CWARNS = -Wall -W -pedantic \
+CWARNS = -Wall -W \
         -Waggregate-return \
         -Wcast-align \
         -Wmissing-prototypes \
@@ -16,9 +16,12 @@ CWARNS = -Wall -W -pedantic \
         -Wshadow \
         -Wwrite-strings
 
-CFLAGS = -D_POSIX_SOURCE $(CWARNS) $(INTTYPE) -O2 -I$(LUADIR)
-CC = gcc
+CFLAGS = -D_POSIX_SOURCE $(MYCFLAGS) $(CWARNS) $(INTTYPE) -O2 -I$(LUADIR)
+CC ?= gcc
 
-struct.so: struct.c makefile
-	$(CC) $(CFLAGS) -shared -fpic -o struct.so struct.c
+libluastruct.so: struct.c makefile
+	$(CC) $(CFLAGS) -shared -fpic -o libluastruct.so struct.c
+
+clean:
+	rm -f libluastruct.so
 
